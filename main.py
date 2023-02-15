@@ -1,24 +1,9 @@
-import matplotlib.pyplot as plt
+from models.rl_ia_models import Agent, State
+from set_up import planes_de_carreras, cuatrimestres_cursados, materias_por_cursar
 
-def P(m) -> int:
-    if m in [0,1]:
-        return m
-    else: 
-        return sum([(nC(m, i) + P(m-i)) for i in range(m)])
+nerd = Agent(alpha=0.7)
+nerd.learn_career_plans(planes_de_carreras)
+initial_state = State(cuatrimestres_cursados, materias_por_cursar)
+my_plan = nerd.make_career_plan(initial_state)
 
-def nC (n, k) -> int:
-    # numero combinatorio
-    return (factorial(n) / (factorial(k) * factorial(n-k)))
-
-def factorial (n) -> int:
-    if n == 0:
-        return 1
-    else:
-        return n*factorial(n-1)
-
-for j in [1,2]:
-    print (j, P(j))
-
-# rango_m = list(range(1,20))
-# plt.plot(rango_m, [P(i) for i in rango_m])
-# plt.show()
+print (my_plan)
